@@ -129,6 +129,7 @@ class Engine {
 
         try{
             Integer.parseInt(displayString);
+
             return displayString;
         } catch (Exception ignored){}
         return "";
