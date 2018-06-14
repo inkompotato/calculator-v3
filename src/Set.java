@@ -82,6 +82,8 @@ public class Set<E>{
         for(E element : list){
             s.append(element).append(",");
         }
+        if(!s.toString().isEmpty())
         return s.toString().substring(0, s.length()-1);
+        else return "";
     }
 }

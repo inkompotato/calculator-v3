@@ -9,12 +9,13 @@ public class SetInterface extends HexInterface implements ActionListener {
     private JTextField resultarea;
     private JTextField set1;
     private JTextField set2;
-    private String resultString;
+    private JLabel statusl;
+    private String status2;
 
     public SetInterface(Engine engine) {
         super(engine);
         assembleset();
-
+        status2 = "123";
         frame.setVisible(true);
     }
 
@@ -25,16 +26,30 @@ public class SetInterface extends HexInterface implements ActionListener {
 
         JPanel setbuttons = new JPanel(new GridLayout(2,2));
         JButton intb = new JButton("INT");
-        intb.addActionListener((ActionEvent e) -> resultarea.setText(calc.setIntersect(getSet1(), getSet2())));
+        intb.addActionListener((ActionEvent e) -> {
+            resultarea.setText(calc.setIntersect(getSet1(), getSet2()));
+            getSize();
+        });
         setbuttons.add(intb);
         JButton unib = new JButton("UNI");
-        unib.addActionListener((ActionEvent e) -> resultarea.setText(calc.setUnion(getSet1(), getSet2())));
+        unib.addActionListener((ActionEvent e) -> {
+            resultarea.setText(calc.setUnion(getSet1(), getSet2()));
+            getSize();
+        });
         setbuttons.add(unib);
         JButton subb = new JButton("SUB");
-        subb.addActionListener((ActionEvent e) -> calc.setSubtract());
+        subb.addActionListener((ActionEvent e) -> {
+            resultarea.setText(calc.setSubtract(getSet1(), getSet2()));
+            getSize();
+        });
         setbuttons.add(subb);
         JButton clrb = new JButton("CLR");
-        clrb.addActionListener((ActionEvent e) -> calc.setClear());
+        clrb.addActionListener((ActionEvent e) -> {
+            resultarea.setText("");
+            set1.setText("");
+            set2.setText("");
+            getSize();
+        });
         setbuttons.add(clrb);
 
         setpanel.add(setbuttons, BorderLayout.EAST);
@@ -54,13 +69,16 @@ public class SetInterface extends HexInterface implements ActionListener {
 
         JPanel addbuttons = new JPanel(new GridLayout(2,1));
         JButton add1 = new JButton("+");
-        add1.addActionListener((ActionEvent e) -> calc.addToSet(1));
+        appendcalc(add1, set1);
         addbuttons.add(add1);
         JButton add2 = new JButton("+");
-        add2.addActionListener((ActionEvent e) -> calc.addToSet(2));
+        appendcalc(add2, set2);
         addbuttons.add(add2);
 
         setpanel.add(addbuttons, BorderLayout.WEST);
+
+        statusl = new JLabel("SETSIZE: 0");
+        setpanel.add(statusl, BorderLayout.SOUTH);
 
         contentPane.add(setpanel, BorderLayout.SOUTH);
 
@@ -68,9 +86,22 @@ public class SetInterface extends HexInterface implements ActionListener {
 
     }
 
-    void setResultString(String str){
-        resultString = str;
-        resultarea.setText(resultString);
+    private void appendcalc(JButton add2, JTextField set2) {
+        add2.addActionListener((ActionEvent e) ->{
+            String s = calc.addToSet();
+            String str = set2.getText();
+            if(str.isEmpty()){
+                set2.setText(s);
+            }
+            else{
+                set2.setText(str+","+s);
+            }
+        });
+    }
+
+    void getSize(){
+        int i = calc.getSize(resultarea.getText());
+        statusl.setText("SETSIZE: "+String.valueOf(i));
     }
 
     String getSet1(){

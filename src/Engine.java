@@ -1,6 +1,7 @@
 
 /**
  * UserInterface
+ *
  * @author Jan Schelhaas and Larissa Wagnerberger
  * @version 2018.06.13
  */
@@ -72,11 +73,10 @@ class Engine {
             String sign = (displayString.matches("^-.*")) ? "" : "-";
             displayString = displayString.replaceAll("^-", "");
             int decoded;
-            if (hexMode){
+            if (hexMode) {
                 decoded = Integer.decode("0x" + displayString);
                 displayString = sign + Integer.toHexString(decoded).toUpperCase();
-            }
-            else {
+            } else {
                 decoded = Integer.parseInt(displayString);
                 displayString = sign + String.valueOf(decoded);
             }
@@ -88,7 +88,7 @@ class Engine {
     }
 
 
-    void op(String op){
+    void op(String op) {
         displayString += op;
     }
 
@@ -112,7 +112,6 @@ class Engine {
     }
 
 
-
     public String setIntersect(String set1, String set2) {
         Set<Integer> resultset = toSet(set1).intersect(toSet(set2));
         return resultset.toString();
@@ -122,22 +121,36 @@ class Engine {
         return (toSet(set1).combine(toSet(set2))).toString();
     }
 
-    public void setSubtract() {
+    public String setSubtract(String set1, String set2) {
+        return (toSet(set1).subtract(toSet(set2))).toString();
     }
 
-    public void setClear() {
+    public String addToSet() {
+
+        try{
+            Integer.parseInt(displayString);
+            return displayString;
+        } catch (Exception ignored){}
+        return "";
     }
 
-    public void addToSet(int i) {
-    }
+    private Set<Integer> toSet(String str) {
 
-    private Set<Integer> toSet (String str){
         Set<Integer> set = new Set<>();
-        String[] strarray = str.split(",");
-        for (String s : strarray){
-            set.add(Integer.parseInt(s));
+        try {
+            String[] strarray = str.split(",");
+            for (String s : strarray) {
+                set.add(Integer.parseInt(s));
+            }
+        } catch (Exception ignored) {
+
         }
         return set;
     }
+
+    public int getSize(String str){
+        return toSet(str).size();
+    }
+
 
 }
