@@ -43,7 +43,7 @@ public class UserInterface implements ActionListener {
 	 * Make the frame for the user interface.
 	 */
 	private void makeFrame() {
-		frame = new JFrame("Calculator");
+		frame = new JFrame("DEC | HEX | Set Calculator");
 
 		JPanel contentPane = (JPanel) frame.getContentPane();
 

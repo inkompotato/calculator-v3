@@ -3,19 +3,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SetInterface extends HexInterface implements ActionListener {
+class SetInterface extends HexInterface implements ActionListener {
 
 
     private JTextField resultarea;
     private JTextField set1;
     private JTextField set2;
     private JLabel statusl;
-    private String status2;
 
-    public SetInterface(Engine engine) {
+    SetInterface(Engine engine) {
         super(engine);
         assembleset();
-        status2 = "123";
         frame.setVisible(true);
     }
 
@@ -99,16 +97,16 @@ public class SetInterface extends HexInterface implements ActionListener {
         });
     }
 
-    void getSize(){
+    private void getSize(){
         int i = calc.getSize(resultarea.getText());
         statusl.setText("SETSIZE: "+String.valueOf(i));
     }
 
-    String getSet1(){
+    private String getSet1(){
         return set1.getText();
     }
 
-    String getSet2() {
+    private String getSet2() {
         return set2.getText();
     }
 }
