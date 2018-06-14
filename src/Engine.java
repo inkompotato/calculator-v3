@@ -68,53 +68,58 @@ class Engine {
     }
 
     void negate() {
-            try {
-                String sign = (displayString.matches("^-.*")) ? "" : "-";
-                displayString = displayString.replaceAll("^-", "");
-                int decoded;
-                if (hexMode){
-                    decoded = Integer.decode("0x" + displayString);
-                    displayString = sign + Integer.toHexString(decoded).toUpperCase();
-                }
-                else {
-                    decoded = Integer.parseInt(displayString);
-                    displayString = sign + String.valueOf(decoded);
-                }
-                error = "";
-
-            } catch (Exception e) {
-                error = "Unable to negate this expression";
+        try {
+            String sign = (displayString.matches("^-.*")) ? "" : "-";
+            displayString = displayString.replaceAll("^-", "");
+            int decoded;
+            if (hexMode){
+                decoded = Integer.decode("0x" + displayString);
+                displayString = sign + Integer.toHexString(decoded).toUpperCase();
             }
+            else {
+                decoded = Integer.parseInt(displayString);
+                displayString = sign + String.valueOf(decoded);
+            }
+            error = "";
+
+        } catch (Exception e) {
+            error = "Unable to negate this expression";
         }
-
-
-        void op(String op){
-            displayString += op;
-        }
-
-        String getDisplayString() {
-            return displayString;
-        }
-
-        void clear() {
-            displayString = "";
-        }
-
-        String getStatus() {
-            if (hexMode)
-                return "HEX";
-            else
-                return "DEC";
-        }
-
-        String getError() {
-            return error;
-        }
-
-    public void setIntersect() {
     }
 
-    public void setUnion() {
+
+    void op(String op){
+        displayString += op;
+    }
+
+    String getDisplayString() {
+        return displayString;
+    }
+
+    void clear() {
+        displayString = "";
+    }
+
+    String getStatus() {
+        if (hexMode)
+            return "HEX";
+        else
+            return "DEC";
+    }
+
+    String getError() {
+        return error;
+    }
+
+
+
+    public String setIntersect(String set1, String set2) {
+        Set<Integer> resultset = toSet(set1).intersect(toSet(set2));
+        return resultset.toString();
+    }
+
+    public String setUnion(String set1, String set2) {
+        return (toSet(set1).combine(toSet(set2))).toString();
     }
 
     public void setSubtract() {
@@ -125,4 +130,14 @@ class Engine {
 
     public void addToSet(int i) {
     }
+
+    private Set<Integer> toSet (String str){
+        Set<Integer> set = new Set<>();
+        String[] strarray = str.split(",");
+        for (String s : strarray){
+            set.add(Integer.parseInt(s));
+        }
+        return set;
+    }
+
 }

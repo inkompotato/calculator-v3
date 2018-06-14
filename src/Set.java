@@ -1,23 +1,87 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public interface Set<T> {
+public class Set<E>{
 
-    boolean isEmpty();
+    ArrayList<E> list;
 
-    boolean contains(T element);
+    Set(){
+        list = new ArrayList<>();
+    }
 
-    int size();
 
-    void add(T element);
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 
-    Set combine(Set<T> set);
 
-    void remove(T element);
+    public boolean contains(E element) {
+        return list.contains(element);
+    }
 
-    Set subtract(Set<T> set);
 
-    Set intersect(Set<T> set);
+    public int size() {
+        return list.size();
+    }
 
-    List<T> setEntriesAsList();
 
+    public void add(E element) {
+        if (!list.contains(element)) {
+            list.add(element);
+        }
+    }
+
+
+    public Set combine(Set<E> setAdd) {
+        Set<E> s = new Set<>();
+        for(E element : list){
+            s.add(element);
+        }
+        for(E element : setAdd.setEntriesAsList()){
+            s.add(element);
+        }
+        return s;
+    }
+
+    public void remove(E element) {
+        if(list.contains(element)){
+            list.remove(element);
+        }
+
+    }
+
+    public Set subtract(Set<E> setSub) {
+        Set<E> s = new Set<>();
+        for(E element : list){
+            s.add(element);
+        }
+        for(E element : setSub.setEntriesAsList()){
+            s.remove(element);
+        }
+        return s;
+    }
+
+
+    public Set intersect(Set <E> setInt) {
+        Set<E> s = new Set<>();
+        for(E element : setInt.setEntriesAsList()){
+            if(list.contains(element)){
+                s.add(element);
+            }
+        }
+
+        return s;
+    }
+
+    public List<E> setEntriesAsList() {
+        return list;
+    }
+
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        for(E element : list){
+            s.append(element).append(",");
+        }
+        return s.toString().substring(0, s.length()-1);
+    }
 }

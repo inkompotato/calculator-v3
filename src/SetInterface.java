@@ -25,10 +25,10 @@ public class SetInterface extends HexInterface implements ActionListener {
 
         JPanel setbuttons = new JPanel(new GridLayout(2,2));
         JButton intb = new JButton("INT");
-        intb.addActionListener((ActionEvent e) -> calc.setIntersect());
+        intb.addActionListener((ActionEvent e) -> resultarea.setText(calc.setIntersect(getSet1(), getSet2())));
         setbuttons.add(intb);
         JButton unib = new JButton("UNI");
-        unib.addActionListener((ActionEvent e) -> calc.setUnion());
+        unib.addActionListener((ActionEvent e) -> resultarea.setText(calc.setUnion(getSet1(), getSet2())));
         setbuttons.add(unib);
         JButton subb = new JButton("SUB");
         subb.addActionListener((ActionEvent e) -> calc.setSubtract());
@@ -70,6 +70,7 @@ public class SetInterface extends HexInterface implements ActionListener {
 
     void setResultString(String str){
         resultString = str;
+        resultarea.setText(resultString);
     }
 
     String getSet1(){
