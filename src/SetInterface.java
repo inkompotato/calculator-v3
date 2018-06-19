@@ -13,11 +13,11 @@ class SetInterface extends HexInterface implements ActionListener {
 
     SetInterface(Engine engine) {
         super(engine);
-        assembleset();
+        assembleSet();
         frame.setVisible(true);
     }
 
-    private void assembleset() {
+    private void assembleSet() {
         JPanel contentPane = (JPanel) frame.getContentPane();
 
         JPanel setpanel = new JPanel(new BorderLayout());
